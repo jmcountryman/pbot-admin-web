@@ -1,80 +1,62 @@
 import React from 'react';
-import './App.css';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.css';
 
+import Navbar from './navbar/navbar';
+import NavbarBrand from './navbar/navbar-brand';
+import NavbarItem from './navbar/navbar-item';
+
+import SignInButton from './auth/sign-in-button';
+import AuthReturn from './auth/auth-return';
+
 const App = function App()
 {
+  const navbarLeft = [
+    <NavbarItem text="Home" href="/" icon="fa-home" />,
+    <NavbarItem text="Links" href="/" icon="fa-table" />,
+    <NavbarItem text="About" href="/" icon="fa-info" />,
+  ];
+
+  const navbarRight = [
+    <NavbarItem href="/" icon="fa-user" />,
+    <NavbarItem href="/auth/login" icon="fa-sign-in" />,
+  ];
+
   return (
-    <div>
-      <nav role="navigation" className="navbar is-warning is-fixed-top has-shadow">
-        <div className="navbar-brand">
-          <a href="/" className="navbar-item">
-            PBot Admin
-          </a>
-        </div>
-        <div className="navbar-menu">
-          <div className="navbar-start">
-            <a href="/" className="navbar-item is-active">
-              <span className="icon">
-                <i className="fa fa-home" />
-              </span>
-              <span>Home</span>
-            </a>
-            <a href="/" className="navbar-item">
-              <span className="icon">
-                <i className="fa fa-table" />
-              </span>
-              <span>Links</span>
-            </a>
-            <a href="/" className="navbar-item">
-              <span className="icon">
-                <i className="fa fa-info" />
-              </span>
-              <span>About</span>
-            </a>
-          </div>
-          <div className="navbar-end">
-            <a href="/" className="navbar-item">
-              <span className="icon">
-                <i className="fa fa-user" />
-              </span>
-            </a>
-            <a href="/" className="navbar-item">
-              <span className="icon">
-                <i className="fa fa-sign-out" />
-              </span>
-            </a>
-          </div>
-        </div>
-      </nav>
-      <section className="section columns">
-        <aside className="menu is-2">
-          <p className="menu-label">
-            General
-          </p>
-          <ul className="menu-list">
-            <li>
-              <a href="/">Dashboard</a>
-            </li>
-            <li>
-              <a href="/">Customers</a>
-            </li>
-          </ul>
-        </aside>
-        <div className="container">
-          <h1 className="title">
-            Hello World
-          </h1>
-          <p className="subtitle">
-            My first website with
-            {' '}
-            <strong>Bulma</strong>
-            !
-          </p>
-        </div>
-      </section>
-    </div>
+    <BrowserRouter>
+      <div>
+        <Route
+          path="/"
+          render={() => (
+            <div>
+              <Navbar brand={<NavbarBrand />} left={navbarLeft} right={navbarRight} />
+
+              <section className="section columns">
+                <aside className="menu is-2">
+                  <p className="menu-label">
+                    General
+                  </p>
+                  <ul className="menu-list">
+                    <li>
+                      <Link to="/users">Users</Link>
+                    </li>
+                    <li>
+                      <Link to="/clips">Welcome Clips</Link>
+                    </li>
+                  </ul>
+                </aside>
+                <div className="container">
+                  <Route path="/auth/login" render={() => <SignInButton />} />
+                  <Route path="/auth/return" render={() => <AuthReturn />} />
+                </div>
+              </section>
+            </div>
+          )
+          }
+        />
+      </div>
+    </BrowserRouter>
   );
 };
 

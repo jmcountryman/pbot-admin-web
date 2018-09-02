@@ -7,8 +7,9 @@ module.exports = {
         'brace-style':          ['error', 'allman'],
         'indent':               ['error', 2, {'SwitchCase': 1}],
         'no-console':           'off',
-        'object-curly-spacing': ['error', 'never'],
-
+        'object-curly-newline': ['error', {
+            'ObjectPattern': {'multiline': true},
+        }],
         'react/jsx-filename-extension': 'off',
     },
 };
