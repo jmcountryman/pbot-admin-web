@@ -5,6 +5,7 @@ module.exports = {
     },
     rules: {
         'brace-style':          ['error', 'allman'],
+        'implicit-arrow-linebreak': 'off',
         'indent':               ['error', 2, {'SwitchCase': 1}],
         'no-console':           'off',
         'object-curly-newline': ['error', {
