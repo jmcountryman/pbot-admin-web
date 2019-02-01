@@ -20,9 +20,12 @@ class AuthReturn extends Component
     if (query.code)
     {
       // TODO: this should be a redux action/saga
-      axios.post('/api/auth', { code: query.code }).then(response => (
-        this.setState({ message: JSON.stringify(response.data) })
-      ));
+      axios.post('/api/auth', { code: query.code }).then((response) =>
+      {
+        // JWT is header.payload.signature. payload can be atob()-ed to get the username
+        localStorage.setItem('jwt', response.data);
+        this.setState({ message: 'Saved token in localStorage!' });
+      });
     }
   }
 

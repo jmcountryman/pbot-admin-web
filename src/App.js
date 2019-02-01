@@ -23,6 +23,7 @@ const App = function App()
     <NavbarItem href="/auth/login" icon="fa-sign-in" />,
   ];
 
+  // TODO: most of this should probably be in like AppLayout or something, with routes as children
   return (
     <BrowserRouter>
       <div>
