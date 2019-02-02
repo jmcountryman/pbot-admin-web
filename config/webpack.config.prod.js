@@ -153,6 +153,16 @@ module.exports = {
               compact: true,
             },
           },
+          {
+            test: /\.js$/,
+            loader: require.resolve('babel-loader'),
+            options: {
+              babelrc: false,
+              compact: false,
+              presets: [require.resolve('babel-preset-react-app/dependencies')],
+              cacheDirectory: true,
+            },
+          },
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
