@@ -1,5 +1,5 @@
 # Build static site
-FROM node:latest as builder
+FROM node:11.9 as builder
 
 RUN mkdir /web
 WORKDIR /web
