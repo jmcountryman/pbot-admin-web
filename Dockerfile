@@ -10,6 +10,7 @@ RUN yarn
 
 COPY . .
 RUN yarn run build
+COPY robots.txt ./build
 
 # Serve static files from nginx and proxy to api
 FROM nginx:stable
