@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 import axios from 'axios';
 
-import { setJwt } from '../redux/auth/actions';
+import { setJwt } from '../../redux/auth/actions';
 
 export class AuthReturn extends Component
 {
@@ -15,7 +15,7 @@ export class AuthReturn extends Component
 
     if (query.code)
     {
-      // TODO: this should be a redux action/saga
+      // TODO: this should be a redux saga
       axios.post('/api/auth', { code: query.code }).then((response) =>
       {
         // JWT is header.payload.signature. payload can be atob()-ed to get the username
