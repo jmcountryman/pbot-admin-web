@@ -1,32 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = function Sidebar({ items })
 {
   return (
-    <section className="section columns">
-      <aside className="menu is-2">
-        {/* <p className="menu-label">
-          General
-        </p> */}
-        <ul className="menu-list">
-          {
-            items.forEach(item => (
-              <li key={item.path}>
-                <Link to={item.path}>{item.text}</Link>
-              </li>
-            ))
-          }
-          <li>
-            <Link to="/users">Users</Link>
-          </li>
-          <li>
-            <Link to="/clips">Welcome Clips</Link>
-          </li>
-        </ul>
-      </aside>
-    </section>
+    <aside className="menu column is-2">
+      <p className="menu-label">
+        Configuration
+      </p>
+      <ul className="menu-list">
+        {
+          items.map(item => (
+            <li key={item.path}>
+              <NavLink to={item.path} activeClassName="is-active">{item.text}</NavLink>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
   );
 };
 

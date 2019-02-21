@@ -15,14 +15,14 @@ import AuthReturn from './auth/auth-return';
 const App = function App()
 {
   const navbarLeft = [
-    <NavbarItem text="Home" href="/" icon="fa-home" />,
-    <NavbarItem text="Links" href="/" icon="fa-table" />,
-    <NavbarItem text="About" href="/" icon="fa-info" />,
+    <NavbarItem text="Home" href="/" icon="fa-home" key="Home" />,
+    <NavbarItem text="Links" href="/" icon="fa-table" key="Links" />,
+    <NavbarItem text="About" href="/" icon="fa-info" key="About" />,
   ];
 
   const navbarRight = [
-    <NavbarItem href="/" icon="fa-user" />,
-    <NavbarItem href="/auth/login" icon="fa-sign-in" />,
+    <NavbarItem href="/" icon="fa-user" key="/" />,
+    <NavbarItem href="/auth/login" icon="fa-sign-in" key="/auth/login" />,
   ];
 
   const sidebarItems = [
@@ -39,11 +39,13 @@ const App = function App()
           render={() => (
             <div>
               <Navbar brand={<NavbarBrand />} left={navbarLeft} right={navbarRight} />
-              <Sidebar items={sidebarItems} />
-              <div className="container">
-                <Route path="/auth/login" render={() => <SignInButton />} />
-                <Route path="/auth/return" render={() => <AuthReturn />} />
-              </div>
+              <section className="section columns">
+                <Sidebar items={sidebarItems} />
+                <div className="container">
+                  <Route path="/auth/login" render={() => <SignInButton />} />
+                  <Route path="/auth/return" render={() => <AuthReturn />} />
+                </div>
+              </section>
             </div>
           )
           }
