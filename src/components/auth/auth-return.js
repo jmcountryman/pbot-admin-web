@@ -19,7 +19,6 @@ export class AuthReturn extends Component
       axios.post('/api/auth', { code: query.code }).then((response) =>
       {
         // JWT is header.payload.signature. payload can be atob()-ed to get the username
-        localStorage.setItem('jwt', response.data);
         onAuthComplete(response.data);
       });
     }
@@ -27,35 +26,16 @@ export class AuthReturn extends Component
 
   render()
   {
-    const { loading } = this.props;
-
-    let message;
-
-    if (loading)
-    {
-      message = 'Communicating with Discord...';
-    }
-    else
-    {
-      message = 'Saved token in localStorage.';
-    }
-
     return (
-      <p>{message}</p>
+      <p>Communicating with Discord...</p>
     );
   }
 }
 
 AuthReturn.propTypes = {
-  loading: PropTypes.bool,
   onAuthComplete: PropTypes.func.isRequired,
 };
 
-AuthReturn.defaultProps = {
-  loading: true,
-};
-
-const mapStateToProps = state => ({ loading: !state.auth.jwt });
 const mapDispatchToProps = dispatch => ({ onAuthComplete: jwt => dispatch(setJwt(jwt)) });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthReturn);
+export default connect(null, mapDispatchToProps)(AuthReturn);

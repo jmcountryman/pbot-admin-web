@@ -1,22 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Navbar = function NavBar({ brand, left, right })
-{
-  return (
-    <nav role="navigation" className="navbar is-warning is-fixed-top has-shadow">
-      {brand}
-      <div className="navbar-menu">
-        <div className="navbar-start">
-          {left}
-        </div>
-        <div className="navbar-end">
-          {right}
-        </div>
+const Navbar = ({ brand, left, right }) => (
+  <nav role="navigation" className="navbar is-warning is-fixed-top has-shadow">
+    {brand}
+    <div className="navbar-menu">
+      <div className="navbar-start">
+        {left}
       </div>
-    </nav>
-  );
-};
+      <div className="navbar-end">
+        {right}
+      </div>
+    </div>
+  </nav>
+);
 
 Navbar.propTypes = {
   brand: PropTypes.node.isRequired,

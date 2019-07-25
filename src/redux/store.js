@@ -1,6 +1,17 @@
-import { createStore, combineReducers } from 'redux';
-import { devToolsEnhancer } from 'redux-devtools-extension/logOnlyInProduction';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 
 import auth from './auth/reducers';
+import jwtStorageMiddleware from './middleware/jwt-storage-middleware';
 
-export default createStore(combineReducers({ auth }), devToolsEnhancer());
+const middleware = [
+  jwtStorageMiddleware,
+];
+
+const initialState = { auth: { jwt: localStorage.getItem('jwt') } };
+
+export default createStore(
+  combineReducers({ auth }),
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware)),
+);

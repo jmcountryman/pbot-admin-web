@@ -1,5 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.css';
 
@@ -9,20 +12,22 @@ import NavbarItem from './navbar/navbar-item';
 
 import Sidebar from './sidebar/sidebar';
 
-import SignInButton from './auth/sign-in-button';
-import AuthReturn from './auth/auth-return';
+import AuthPage from './auth/auth-page';
 
-const App = function App()
+export const App = ({ authenticated }) =>
 {
-  const navbarLeft = [
-    <NavbarItem text="Home" href="/" icon="fa-home" key="Home" />,
-    <NavbarItem text="Links" href="/" icon="fa-table" key="Links" />,
-    <NavbarItem text="About" href="/" icon="fa-info" key="About" />,
-  ];
+  const navbarLeft = authenticated
+    ? [
+      <NavbarItem text="Home" href="/" icon="fa-home" key="Home" />,
+      <NavbarItem text="Links" href="/" icon="fa-table" key="Links" />,
+      <NavbarItem text="About" href="/" icon="fa-info" key="About" />,
+    ]
+    : [];
 
   const navbarRight = [
-    <NavbarItem href="/" icon="fa-user" key="/" />,
-    <NavbarItem href="/auth/login" icon="fa-sign-in" key="/auth/login" />,
+    authenticated
+      ? <NavbarItem href="/auth/logout" text="Log Out" icon="fa-sign-out" key="/auth/logout" />
+      : <NavbarItem href="/auth/login" text="Log In" icon="fa-sign-in" key="/auth/login" />,
   ];
 
   const sidebarItems = [
@@ -40,10 +45,14 @@ const App = function App()
             <div>
               <Navbar brand={<NavbarBrand />} left={navbarLeft} right={navbarRight} />
               <section className="section columns">
-                <Sidebar items={sidebarItems} />
+                {authenticated && <Sidebar items={sidebarItems} />}
                 <div className="container">
-                  <Route path="/auth/login" render={() => <SignInButton />} />
-                  <Route path="/auth/return" render={() => <AuthReturn />} />
+                  <Switch>
+                    {/* Always allow navigation to `/auth/*` */}
+                    <Route path="/auth" component={AuthPage} />
+                    {/* Redirect to `/auth/login` for other paths if not authenticated */}
+                    {!authenticated && <Redirect to="/auth/login" />}
+                  </Switch>
                 </div>
               </section>
             </div>
@@ -55,4 +64,10 @@ const App = function App()
   );
 };
 
-export default App;
+App.propTypes = {
+  authenticated: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = ({ auth }) => ({ authenticated: !!auth.jwt });
+
+export default connect(mapStateToProps)(App);

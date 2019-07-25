@@ -2,10 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const NavbarItem = function NavBarItem(props)
+const NavbarItem = ({ text, href, icon }) =>
 {
-  const { text, href, icon } = props;
-
   const iconElement = icon ? (
     <span className="icon">
       <i className={`fa ${icon}`} />
