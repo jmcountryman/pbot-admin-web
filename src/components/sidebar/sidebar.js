@@ -9,7 +9,7 @@ const Sidebar = ({ items }) => (
     </p>
     <ul className="menu-list">
       {
-        items.map(item => (
+        items.map((item) => (
           <li key={item.path}>
             <NavLink to={item.path} activeClassName="is-active">{item.text}</NavLink>
           </li>

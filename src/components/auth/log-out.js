@@ -33,6 +33,6 @@ LogOut.propTypes = {
 };
 
 const mapStateToProps = ({ auth }) => ({ authenticated: !!auth.jwt });
-const mapDispatchToProps = dispatch => ({ logOut: () => dispatch(setJwt(null)) });
+const mapDispatchToProps = (dispatch) => ({ logOut: () => dispatch(setJwt(null)) });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogOut);

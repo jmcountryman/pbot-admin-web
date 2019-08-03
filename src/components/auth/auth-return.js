@@ -1,31 +1,48 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import axios from 'axios';
 
-import { setJwt } from '../../redux/auth/actions';
+import { authRequest } from '../../redux/auth/actions';
 
 export class AuthReturn extends Component
 {
   componentDidMount()
   {
-    const { onAuthComplete } = this.props;
+    const { doAuth } = this.props;
     const query = queryString.parse(window.location.search);
 
-    if (query.code)
-    {
-      // TODO: this should be a redux saga
-      axios.post('/api/auth', { code: query.code }).then((response) =>
-      {
-        // JWT is header.payload.signature. payload can be atob()-ed to get the username
-        onAuthComplete(response.data);
-      });
-    }
+    doAuth(query.code);
   }
 
   render()
   {
+    const { error } = this.props;
+
+    if (error)
+    {
+      return (
+        <>
+          <p>
+            An error occurred while logging in:
+          </p>
+          <article className="message">
+            <div className="message-body">
+              {error}
+            </div>
+          </article>
+          <p>
+            Maybe
+            {' '}
+            {/* TODO: link directly to Discord oauth page */}
+            <Link to="/auth/login">try again</Link>
+            ?
+          </p>
+        </>
+      );
+    }
+
     return (
       <p>Communicating with Discord...</p>
     );
@@ -33,9 +50,20 @@ export class AuthReturn extends Component
 }
 
 AuthReturn.propTypes = {
-  onAuthComplete: PropTypes.func.isRequired,
+  doAuth: PropTypes.func.isRequired,
+  error: PropTypes.string,
 };
 
-const mapDispatchToProps = dispatch => ({ onAuthComplete: jwt => dispatch(setJwt(jwt)) });
+AuthReturn.defaultProps = {
+  error: null,
+};
 
-export default connect(null, mapDispatchToProps)(AuthReturn);
+const mapStateToProps = ({ auth }) => (
+  { error: auth.error }
+);
+
+const mapDispatchToProps = (dispatch) => (
+  { doAuth: (code) => dispatch(authRequest(code)) }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthReturn);

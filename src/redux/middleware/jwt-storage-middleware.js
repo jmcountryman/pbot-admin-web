@@ -1,6 +1,6 @@
 import { SET_JWT } from '../auth/actions';
 
-const jwtStorageMiddleware = () => next => (action) =>
+const jwtStorageMiddleware = () => (next) => (action) =>
 {
   if (action.type === SET_JWT)
   {

@@ -4,6 +4,7 @@ module.exports = {
         'browser': true,
     },
     rules: {
+        'arrow-parens':         ['error', 'always'],
         'brace-style':          ['error', 'allman'],
         'implicit-arrow-linebreak': 'off',
         'import/no-named-as-default': 'off',
